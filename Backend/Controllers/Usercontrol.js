@@ -41,7 +41,26 @@ const addUsers = async (req, res, next) => {
     }
     return res.status(200).json({users});
 
+};
+
+// get data by ID
+const getUserById = async (req, res, next) => {
+    const userId = req.params.userId; // changed from id to userId
+    let user;
+
+    try{
+        user = await User.findById(userId);
+    }catch(err){
+        console.log(err);
+    }
+
+    if(!user){
+        return res.status(404).json({message: "No user found"});
+    }
+    return res.status(200).json({user});
+
 }
 
 exports.addUsers = addUsers;
 exports.getAllUsers = getAllUsers;
+exports.getUserById = getUserById;

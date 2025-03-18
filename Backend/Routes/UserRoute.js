@@ -9,6 +9,7 @@ const Usercontroller = require('../Controllers/Usercontrol');
 
 router.get('/', Usercontroller.getAllUsers);
 router.post('/', Usercontroller.addUsers);
+router.get('/:userId', Usercontroller.getUserById); // not sure if its userId or id
 
 // export
 module.exports = router;
