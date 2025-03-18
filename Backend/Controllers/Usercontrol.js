@@ -22,4 +22,26 @@ const getAllUsers = async (req, res) => {
 
 };
 
+// data insertion
+const addUsers = async (req, res, next) => {
+    const {name, studentID, email, password, phoneNumber} = req.body;
+    
+    let users;
+
+    try{
+        users = new User({name, studentID, email, password, phoneNumber});
+        await users.save();
+    }catch(err){
+        console.log(err);
+    }
+
+    // if no users were added
+    if(!users){
+        return res.status(404).json({message: "No users added"});
+    }
+    return res.status(200).json({users});
+
+}
+
+exports.addUsers = addUsers;
 exports.getAllUsers = getAllUsers;

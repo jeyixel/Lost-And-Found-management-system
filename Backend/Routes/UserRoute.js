@@ -8,6 +8,7 @@ const User = require('../Model/UserModel');
 const Usercontroller = require('../Controllers/Usercontrol');
 
 router.get('/', Usercontroller.getAllUsers);
+router.post('/', Usercontroller.addUsers);
 
 // export
 module.exports = router;

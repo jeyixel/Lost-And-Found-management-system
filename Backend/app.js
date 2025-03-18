@@ -8,6 +8,7 @@ const router = require("./Routes/UserRoute");
 const app = express();
 
 // middleware
+app.use(express.json());
 app.use("/users", router);
 
 mongoose.connect("mongodb+srv://jcj2:8sOnzmeBJSiPekJr@cluster1.thoez.mongodb.net/")
