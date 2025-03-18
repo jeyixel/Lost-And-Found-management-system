@@ -61,6 +61,27 @@ const getUserById = async (req, res, next) => {
 
 }
 
+// Update user details
+const updateUser = async (req, res, next) => {
+    const userId = req.params.userId;
+    const {name, studentID, email, password, phoneNumber} = req.body;
+
+    let users;
+
+    try{
+        users = await User.findByIdAndUpdate(userId, {name, studentID, email, password, phoneNumber});
+        users = await users.save();
+    }catch(err){
+        console.log(err);
+    }
+
+    if(!users){
+        return res.status(404).json({message: "Unable to edit user"});
+    }
+    return res.status(200).json({users});
+}
+
 exports.addUsers = addUsers;
 exports.getAllUsers = getAllUsers;
 exports.getUserById = getUserById;
+exports.updateUser = updateUser;
