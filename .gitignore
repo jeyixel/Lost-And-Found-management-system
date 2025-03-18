@@ -1,0 +1,71 @@
+# Node.js
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Logs
+npm-debug.log*
+logs/
+
+# Build output
+build/
+dist/
+out/
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Optional local development files
+*.local
+
+# Optional production files
+*.pid
+*.seed
+*.pid.lock
+
+# Optional database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Optional temporary files
+temp/
+*.tmp
+
+# Optional uploaded files
+uploads/
+
+# Optional compiled files
+*.class
+*.exe
+*.dll
+*.so
+*.o
+*.a
