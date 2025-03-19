@@ -15,11 +15,12 @@ function Nav() {
             <div className = "btn">
                 <i className = "fas fa-times close-btn"></i>
             </div>
-            <Link to = "/">Home</Link>
-            <Link to = "/">Lost Items</Link>
-            <Link to = "/">Found Items</Link>
-            <Link to = "/">Feedback</Link>
-            <Link to = "/">Contact</Link>
+            <Link to = "/mainhome">Home</Link>
+            <Link to = "/createAccount">Create Account</Link>
+            <Link to = "/lostItems">Lost Items</Link>
+            <Link to = "/foundItems">Found Items</Link>
+            <Link to = "/feedback">Feedback</Link>
+            <Link to = "/userdetails">Profile</Link>
         </div>
 
       </header>
