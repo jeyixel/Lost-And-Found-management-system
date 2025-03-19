@@ -1,12 +1,13 @@
 // import logo from './logo.svg';
 import './App.css';
 import Home from './Components/Home/Home';
+import Nav from "./Components/Navbar/Nav";
 
 function App() {
   return (
     <div>
-      <h1>Home should appear below</h1>
-      <Home></Home>
+      <Nav/>
+      <Home/>
     </div>
   );
 }
