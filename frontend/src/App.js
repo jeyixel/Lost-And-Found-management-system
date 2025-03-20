@@ -6,7 +6,7 @@ import Home from './Components/Home/Home';
 import Nav from "./Components/Navbar/Nav";
 import Charity from "./Components/Charity/Charity";
 import UserDetails from "./Components/UserDetails/Users";
-import CreateUser from "./Components/User/User";
+import CreateUser from "./Components/Adduser/Adduser";
 import FoundItems from "./Components/FoundItems/FoundItems";
 import LostItems from "./Components/Lostitems/Lostitems";
 import Feedback from "./Components/Feedback/Feedback";
