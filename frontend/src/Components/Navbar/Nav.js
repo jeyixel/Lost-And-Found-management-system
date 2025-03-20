@@ -16,7 +16,7 @@ function Nav() {
                 <i className = "fas fa-times close-btn"></i>
             </div>
             <Link to = "/mainhome">Home</Link>
-            <Link to = "/createAccount">Create Account</Link>
+            <Link to = "/createAccount">View Users</Link>
             <Link to = "/lostItems">Lost Items</Link>
             <Link to = "/foundItems">Found Items</Link>
             <Link to = "/feedback">Feedback</Link>

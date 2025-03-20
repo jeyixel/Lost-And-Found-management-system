@@ -1,25 +1,53 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Nav from "../Navbar/Nav";
+import User from '../User/User';
 
-const URL = "http://localhost:5000/users"
+const Users = () => {
+  const URL = "http://localhost:5000/users";
+  const [users, setUsers] = useState([]); // Initialize as an empty array
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const fetchHandler = async () => {
-    return await axios.get(URL).then((res) => res.data);
-}
+  useEffect(() => {
+    const getStudents = async () => {
+      try {
+        const res = await axios.get(URL);
+        console.log("API Response:", res.data);
 
-function Users() {
+        // Access the Users array from the response
+        setUsers(res.data.Users);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
 
-    const[users, setUsers] = useState();
-    useEffect(() => {
-        fetchHandler().then((data) => setUsers(data.users));
-    }, []);
+    getStudents();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div>
       <h1>User details page</h1>
+      {users.length > 0 ? (
+        users.map((user, i) => (
+          <div key={i}>
+            <User user={user} />
+          </div>
+        ))
+      ) : (
+        <div>No users found.</div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;
