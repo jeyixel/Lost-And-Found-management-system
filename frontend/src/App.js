@@ -10,6 +10,7 @@ import CreateUser from "./Components/Adduser/Adduser";
 import FoundItems from "./Components/FoundItems/FoundItems";
 import LostItems from "./Components/Lostitems/Lostitems";
 import Feedback from "./Components/Feedback/Feedback";
+import UpdateUsers from "./Components/UpdateUser/UpdateUsers";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/lostItems" element={<LostItems />} />
           <Route path="/foundItems" element={<FoundItems />} />
           <Route path="/charity" element={<Charity />} />
+          <Route path="/userdetails/:id" element={<UpdateUsers />} />
         </Routes>
       </React.Fragment>
     </div>

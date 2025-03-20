@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom';
 
 function User(props) {
 
@@ -17,7 +18,8 @@ function User(props) {
       <h1>Email: {email}</h1>
       <h1>Password: {password}</h1>
       <h1>Phone number: {phoneNumber}</h1>
-      
+      <Link to={`/userdetails/${_id}`}>Update</Link>
+      <button>Delete</button>
     </div>
   )
 }
