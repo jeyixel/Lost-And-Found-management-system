@@ -1,13 +1,27 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+//import { useNavigate } from 'react-router-dom';
 
 function User(props) {
 
-  if(!props.user) {
-    return <h1>No data found</h1>
+  const {_id, name, studentID, email, password, phoneNumber} = props.user
+
+  // data deletion
+  //const history = useNavigate();
+
+  const deleteHandler = async() => {
+    try {
+      await axios.delete(`http://localhost:5000/users/${_id}`)
+      .then((res) => res.data)
+      // .then(() => history("/"))
+      // .then(() => history("/userdetails"));
+      window.location.reload(); // refreshes the page to display new data
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  const {_id, name, studentID, email, password, phoneNumber} = props.user
   return (
     <div>
       <h1>User display page</h1>
@@ -19,7 +33,7 @@ function User(props) {
       <h1>Password: {password}</h1>
       <h1>Phone number: {phoneNumber}</h1>
       <Link to={`/userdetails/${_id}`}>Update</Link>
-      <button>Delete</button>
+      <button onClick={deleteHandler}>Delete</button>
     </div>
   )
 }
