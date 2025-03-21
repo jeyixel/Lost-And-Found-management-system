@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import '../UserDetails/users.css';
 //import { useNavigate } from 'react-router-dom';
 
 function User(props) {
@@ -23,19 +24,43 @@ function User(props) {
   }
 
   return (
-    <div>
-      <h1>User display page</h1>
-      <br></br>
-      <h1>ID: {_id}</h1>
-      <h1>ID: {studentID}</h1>
-      <h1>Name: {name}</h1>
-      <h1>Email: {email}</h1>
-      <h1>Password: {password}</h1>
-      <h1>Phone number: {phoneNumber}</h1>
-      <Link to={`/userdetails/${_id}`}>Update</Link>
-      <button onClick={deleteHandler}>Delete</button>
-    </div>
-  )
+    
+    <tbody className='Users-table-body'>
+      <tr>
+        <td>ID</td>
+        <td>{_id}</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>{name}</td>
+      </tr>
+      
+      <tr>
+        <td>Email</td>
+        <td>{email}</td>
+      </tr>
+      
+      <tr>
+        <td>Password</td>
+        <td>{password}</td>
+      </tr>
+      <tr>
+        <td>Phone number</td>
+        <td>{phoneNumber}</td>
+      </tr>
+      <tr>
+        <td>Student ID</td>
+        <td>{studentID}</td>
+      </tr>
+      
+      <td className='btns'>
+        <Link to={`/userdetails/${_id}`} className="update-btn">Update</Link>
+        <button onClick={deleteHandler} className="delete-btn">Delete</button>
+      </td>
+
+    </tbody>
+    
+  );
 }
 
 export default User

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import User from '../User/User';
+import './users.css';
 
 const Users = () => {
   const URL = "http://localhost:5000/users";
@@ -35,17 +36,13 @@ const Users = () => {
   }
 
   return (
-    <div>
-      <h1>User details page</h1>
-      {users.length > 0 ? (
-        users.map((user, i) => (
-          <div key={i}>
-            <User user={user} />
-          </div>
-        ))
-      ) : (
-        <div>No users found.</div>
-      )}
+    <div className='Users-body'>
+      <h1>Users List</h1>
+      <table className='Users-table'>
+        {users.map((user) => (
+          <User key={user._id} user={user} />
+        ))}
+      </table>
     </div>
   );
 };
