@@ -25,7 +25,7 @@ function Adduser() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
-    sendRequest().then(() => history('/userdetails')); // add the route path in App.js here to redirect to the desired page
+    sendRequest().then(() => history('/login')); // add the route path in App.js here to redirect to the desired page
   }
 
   // send request to the server

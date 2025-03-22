@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../UserDetails/users.css';
 //import { useNavigate } from 'react-router-dom';
@@ -9,15 +9,14 @@ function User(props) {
   const {_id, name, studentID, email, password, phoneNumber} = props.user
 
   // data deletion
-  //const history = useNavigate();
+  const history = useNavigate();
 
   const deleteHandler = async() => {
     try {
       await axios.delete(`http://localhost:5000/users/${_id}`)
       .then((res) => res.data)
-      // .then(() => history("/"))
-      // .then(() => history("/userdetails"));
-      window.location.reload(); // refreshes the page to display new data
+      .then(() => history("/"));
+      // window.location.reload(); // refreshes the page to display new data
     } catch (error) {
       console.error(error);
     }
