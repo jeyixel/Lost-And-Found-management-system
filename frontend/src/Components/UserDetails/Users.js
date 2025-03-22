@@ -11,12 +11,18 @@ const Users = () => {
 
   useEffect(() => {
     const getStudents = async () => {
-      try {
-        const res = await axios.get(URL);
-        console.log("API Response:", res.data);
+      const userId = localStorage.getItem("userId"); // Retrieve the user ID from localStorage
+      if (!userId) {
+        setError("User not logged in");
+        setLoading(false);
+        return;
+      }
 
-        // Access the Users array from the response
-        setUsers(res.data.Users);
+      try {
+        const res = await axios.get(`http://localhost:5000/users/${userId}`);
+        console.log(res.data.user);
+        setUsers(res.data.user); // Set the user details
+        setUsers([res.data.user])
         setLoading(false);
       } catch (err) {
         setError(err.message);

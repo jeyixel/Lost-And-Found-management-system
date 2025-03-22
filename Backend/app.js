@@ -30,7 +30,7 @@ app.post("/login", async (req, res) => {
             return res.json({err: "User not found"});
         }
         if(user.password === password){
-            return res.json({status: "ok"});
+            return res.json({status: "ok", userId: user._id}); // sending user ID
         }else{
             return res.json({status: "Incorrect password"});
         }

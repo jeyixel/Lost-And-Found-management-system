@@ -33,6 +33,7 @@ function Login() {
       const response = await sendRequest();
       if (response.status === "ok"){
         alert("Login successful");
+        localStorage.setItem("userId", response.userId);
         history('/userdetails');
       }else{
         alert("Login failed");
