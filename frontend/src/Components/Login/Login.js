@@ -48,9 +48,10 @@ function Login() {
       <div className="login-container">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
-          <div className="login-input-boxes">
+
+          <div className="login-input-fields">
             <label>Email</label>
-            <input
+            <input className='login-input-box'
               type="email"
               name="email"
               value={inputs.email}
@@ -60,9 +61,9 @@ function Login() {
             />
           </div>
 
-          <div className="login-input-boxes">
+          <div className="login-input-fields">
             <label>Password</label>
-            <input
+            <input className='login-input-box'
               type="password"
               name="password"
               value={inputs.password}
@@ -72,7 +73,7 @@ function Login() {
             />
           </div>
 
-          <button type="submit">Login</button>
+          <button className='login-btn' type="submit">Login</button>
         </form>
       </div>
     </div>

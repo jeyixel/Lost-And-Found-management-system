@@ -24,6 +24,24 @@ function Adduser() {
   // submit button click
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // frontend validation
+    if (/\d/.test(inputs.name)) {
+      alert("Name cannot contain numbers.");
+      return;
+    }
+
+    const studentIdRegex = /^[A-Z]+\d{1,9}$/; // Starts with uppercase letters, followed by numbers (max 10 chars)
+    if (!studentIdRegex.test(inputs.studentID)) {
+      alert("Invalid Student ID format. Example: IT23124323.");
+      return;
+    }
+
+    if (inputs.phoneNumber.length > 10) {
+      alert("Phone number cannot exceed 10 digits.");
+      return;
+    }
+
     console.log(inputs);
     sendRequest().then(() => history('/login')); // add the route path in App.js here to redirect to the desired page
   }
@@ -53,12 +71,12 @@ function Adduser() {
 
         <div className={styles['input-box']}>
           <label>Student ID</label>
-          <input type='text' name='studentID' onChange={handleChange} value={inputs.studentID} placeholder='Student ID' className={styles['input-element']} required/>
+          <input type='text' name='studentID' onChange={handleChange} value={inputs.studentID} placeholder='Student ID' className={styles['input-element']} maxLength="10" required/>
         </div>
 
         <div className={styles['input-box']}>
           <label>Email</label>
-          <input type='text' name='email' onChange={handleChange} value={inputs.email} placeholder='someone@gmail.com' className={styles['input-element']} required/>
+          <input type='email' name='email' onChange={handleChange} value={inputs.email} placeholder='someone@gmail.com' className={styles['input-element']} required/>
         </div>
 
         <div className={styles['input-box']}>
@@ -68,7 +86,7 @@ function Adduser() {
 
         <div className={styles['input-box']}>
           <label>Phone number</label>
-          <input type='number' name='phoneNumber' onChange={handleChange} value={inputs.phoneNumber} placeholder='Enter phone number' className={styles['input-element']} required/>
+          <input type='tel' name='phoneNumber' onChange={handleChange} value={inputs.phoneNumber} placeholder='Enter phone number' className={styles['input-element']} required/>
         </div>
 
         <div className={styles['submit-container']}>

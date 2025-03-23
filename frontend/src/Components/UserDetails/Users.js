@@ -43,11 +43,13 @@ const Users = () => {
 
   return (
     <div className='Users-body'>
-      <h1>Users List</h1>
+      <h1 className='header-profile'>My profile</h1>
       <table className='Users-table'>
-        {users.map((user) => (
-          <User key={user._id} user={user} />
-        ))}
+        <tbody className='Users-table-body'>
+          {users.map((user) => (
+            <User key={user._id} user={user} />
+          ))}
+        </tbody>
       </table>
     </div>
   );

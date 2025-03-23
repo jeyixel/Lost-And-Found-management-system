@@ -18,3 +18,40 @@
     border-radius: 20px;
 }
 
+.login-input-fields{
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.login-input-box{
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    /* border-radius: 20px; */
+}
+
+.login-btn{
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: #393939;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.login-btn:hover{
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: #393939;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+

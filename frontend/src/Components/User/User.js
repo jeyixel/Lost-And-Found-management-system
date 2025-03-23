@@ -23,31 +23,30 @@ function User(props) {
   }
 
   return (
-    
-    <tbody className='Users-table-body'>
-      <tr>
+    <div>
+      <tr className = 'table-Row-Profile'>
         <td>ID</td>
         <td>{_id}</td>
       </tr>
-      <tr>
+      <tr className = 'table-Row-Profile'>
         <td>name</td>
         <td>{name}</td>
       </tr>
       
-      <tr>
+      <tr className = 'table-Row-Profile'>
         <td>Email</td>
         <td>{email}</td>
       </tr>
       
-      <tr>
+      <tr className = 'table-Row-Profile'>
         <td>Password</td>
         <td>{password}</td>
       </tr>
-      <tr>
+      <tr className = 'table-Row-Profile'>
         <td>Phone number</td>
         <td>{phoneNumber}</td>
       </tr>
-      <tr>
+      <tr className = 'table-Row-Profile'>
         <td>Student ID</td>
         <td>{studentID}</td>
       </tr>
@@ -56,8 +55,7 @@ function User(props) {
         <Link to={`/userdetails/${_id}`} className="update-btn">Update</Link>
         <button onClick={deleteHandler} className="delete-btn">Delete</button>
       </td>
-
-    </tbody>
+    </div>
     
   );
 }

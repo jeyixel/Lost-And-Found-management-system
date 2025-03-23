@@ -10,7 +10,7 @@ function Launchpage() {
       </div>
 
       <div className="para">
-        <p>A very own lost and found management system for students of sliit</p>
+        <p>Lost It? Report It. Found It? Return It. All with FindItFast!</p>
       </div>
 
       <div className="buttondeka">

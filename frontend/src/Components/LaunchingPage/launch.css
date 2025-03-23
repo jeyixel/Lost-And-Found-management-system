@@ -8,6 +8,11 @@
     flex-direction: column;
     min-height: 100vh;
     background-color: #fcfcfc;
+    background-image: url("launchbg.JPG");
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed;
 }
 
 .welcome{
