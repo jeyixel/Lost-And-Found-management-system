@@ -17,7 +17,7 @@ import Launch from "./Components/LaunchingPage/Launchpage";
 function App() {
   return (
     <div>
-      <Nav/>
+      {/* <Nav/> */}
       <React.Fragment>
         <Routes>
           <Route path="/" element={<Launch />} />

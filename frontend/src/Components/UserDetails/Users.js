@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import User from '../User/User';
 import './users.css';
+import Nav from '../Navbar/Nav';
 
 const Users = () => {
   const URL = "http://localhost:5000/users";
@@ -43,6 +44,7 @@ const Users = () => {
 
   return (
     <div className='Users-body'>
+      <Nav/>
       <h1 className='header-profile'>My profile</h1>
       <table className='Users-table'>
         <tbody className='Users-table-body'>

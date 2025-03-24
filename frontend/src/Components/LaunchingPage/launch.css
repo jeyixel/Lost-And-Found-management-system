@@ -7,6 +7,7 @@
     justify-content: center;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
     background-color: #fcfcfc;
     background-image: url("launchbg.JPG");
     background-size: cover; /* Ensures the image covers the entire background */

@@ -3,8 +3,8 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    max-width: 1400px;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .nav-header {
@@ -15,9 +15,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 100px;
-    transition: all 0.5s;
+    padding: 20px 10%;
     background-color: aquamarine;
+    box-sizing: border-box;
 }
 
 .nav-brandname {
@@ -34,6 +34,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .nav-menu a {
@@ -41,8 +42,8 @@
     font-weight: 500;
     text-decoration: none;
     background-color: #fff;
-    margin: 0 30px;
-    padding: 0 10px;
+    margin: 0 10px;
+    padding: 8px 16px;
     border-radius: 20px;
     transition: 0.5s;
     transition-property: color, background-color;
