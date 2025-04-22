@@ -50,6 +50,6 @@
 }
 
 .nav-menu a:hover {
-    background-color: #727272;
-    color: black;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
 }

@@ -31,7 +31,7 @@ function Adduser() {
       return;
     }
 
-    const studentIdRegex = /^[A-Z]+\d{1,9}$/; // Starts with uppercase letters, followed by numbers (max 10 chars)
+    const studentIdRegex = /^[A-Z]+\d{1,9}$/;
     if (!studentIdRegex.test(inputs.studentID)) {
       alert("Invalid Student ID format. Example: IT23124323.");
       return;
@@ -43,7 +43,7 @@ function Adduser() {
     }
 
     console.log(inputs);
-    sendRequest().then(() => history('/login')); // add the route path in App.js here to redirect to the desired page
+    sendRequest().then(() => history('/login')); // go back to login page
   }
 
   // send request to the server

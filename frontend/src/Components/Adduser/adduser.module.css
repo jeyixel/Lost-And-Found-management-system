@@ -11,6 +11,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    background-image: url('createaccbg.png');
 }
 
 .container{
@@ -21,6 +22,7 @@
     border-radius: 20px;
     border: solid 1px #000000;
     padding: 25px;
+    margin-left: 85px;
 }
 
 /* Header of the form container */
