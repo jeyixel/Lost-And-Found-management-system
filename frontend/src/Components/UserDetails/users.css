@@ -16,7 +16,7 @@
 
 .Users-table{
   font-family: 'Poppins', sans-serif;
-  width: 100%;
+  width: 50%;
   max-width: 1200px;
   text-align: left;
   border-collapse: separate;
@@ -58,6 +58,8 @@
   text-decoration: none;
   border-radius: 5px;
   font-size: 14px;
+  width: 70px;
+  height: 30px;
   font-weight: bold;
   transition: background-color 0.3s ease;
   margin-right: 10px;
@@ -72,6 +74,8 @@
     background-color: #e74c3c;
     color: white;
     border: none;
+    width: 109px;
+    height: 46px;
     border-radius: 5px;
     font-size: 14px;
     font-weight: bold;

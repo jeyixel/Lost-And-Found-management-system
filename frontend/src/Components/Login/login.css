@@ -7,6 +7,7 @@
     justify-content: center;
     min-height: 100vh;
     background-color: #393939;
+    background-image: url('loginbg.jpg');
 }
 
 .login-container{

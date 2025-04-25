@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import styles from "../Adduser/adduser.module.css";
+import styles from "./updateuser.module.css";
 
 function UpdateUsers() {
 
