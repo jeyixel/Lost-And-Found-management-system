@@ -1,25 +1,60 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Nav from "../Navbar/Nav";
+import User from '../User/User';
+import './users.css';
+import Nav from '../Navbar/Nav';
 
-const URL = "http://localhost:5000/users"
+const Users = () => {
+  const URL = "http://localhost:5000/users";
+  const [users, setUsers] = useState([]); // Initialize as an empty array
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const fetchHandler = async () => {
-    return await axios.get(URL).then((res) => res.data);
-}
+  useEffect(() => {
+    const getStudents = async () => {
+      const userId = localStorage.getItem("userId"); // Retrieve the user ID from localStorage
+      if (!userId) {
+        setError("User not logged in");
+        setLoading(false);
+        return;
+      }
 
-function Users() {
+      try {
+        const res = await axios.get(`http://localhost:5000/users/${userId}`);
+        console.log(res.data.user);
+        setUsers(res.data.user); // Set the user details
+        setUsers([res.data.user])
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
 
-    const[users, setUsers] = useState();
-    useEffect(() => {
-        fetchHandler().then((data) => setUsers(data.users));
-    }, []);
+    getStudents();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <div>
-      <h1>User details page</h1>
+    <div className='Users-body'>
+      <Nav/>
+      <h1 className='header-profile'>My profile</h1>
+      <table className='Users-table'>
+        <tbody className='Users-table-body'>
+          {users.map((user) => (
+            <User key={user._id} user={user} />
+          ))}
+        </tbody>
+      </table>
     </div>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;
