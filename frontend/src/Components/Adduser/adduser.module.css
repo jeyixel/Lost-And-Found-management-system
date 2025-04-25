@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.form-body{
+    min-height: 100vh; 
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    /* mek * dala hduwe but due to the global nature of CSS i had to add it to a class */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    background-image: url('createaccbg.png');
+}
+
+.container{
+    position: relative;
+    max-width: 700px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 20px;
+    border: solid 1px #000000;
+    padding: 25px;
+    margin-left: 85px;
+}
+
+/* Header of the form container */
+.container .headerclass{
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+
+}
+
+.container .form-class{
+    margin-top: 30px;
+}
+
+.form-class .input-box{
+    width: 100%;
+    margin-top: 20px;
+
+}
+
+/* label */
+.input-box label{
+    color: #000000;
+
+}
+
+
+/* input box control */
+.form-class .input-box .input-element{
+    position: relative;
+    height: 50px;
+    width: 95%;
+    outline: none;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    padding: 0 15px;
+}
+
+.form-class .submit-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-class .submit-container .submit-button{
+    height: 50px;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    background-color: #000000;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+}
