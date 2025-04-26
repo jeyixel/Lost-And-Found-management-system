@@ -13,6 +13,8 @@ import Feedback from "./Components/Feedback/Feedback";
 import UpdateUsers from "./Components/UpdateUser/UpdateUsers";
 import Login from "./Components/Login/Login";
 import Launch from "./Components/LaunchingPage/Launchpage";
+import AdminLogin from './Components/Login/AdminLogin';
+import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/foundItems" element={<FoundItems />} />
           <Route path="/charity" element={<Charity />} />
           <Route path="/userdetails/:id" element={<UpdateUsers />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>
       </React.Fragment>
     </div>
