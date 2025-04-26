@@ -57,7 +57,7 @@ const getUserById = async (req, res, next) => {
     if(!user){
         return res.status(404).json({message: "No user found"});
     }
-    return res.status(200).json({user});
+    return res.status(200).json({user}); // when the frontend receives this response, it accesses the data via res.data.user
 
 }
 
