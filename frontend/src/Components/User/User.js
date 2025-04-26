@@ -23,40 +23,38 @@ function User(props) {
   }
 
   return (
-    <div>
-      <tr className = 'table-Row-Profile'>
+    <>
+      <tr>
         <td>ID</td>
         <td>{_id}</td>
       </tr>
-      <tr className = 'table-Row-Profile'>
+      <tr>
         <td>name</td>
         <td>{name}</td>
       </tr>
-      
-      <tr className = 'table-Row-Profile'>
+      <tr>
         <td>Email</td>
         <td>{email}</td>
       </tr>
-      
-      <tr className = 'table-Row-Profile'>
+      <tr>
         <td>Password</td>
         <td>{password}</td>
       </tr>
-      <tr className = 'table-Row-Profile'>
+      <tr>
         <td>Phone number</td>
         <td>{phoneNumber}</td>
       </tr>
-      <tr className = 'table-Row-Profile'>
+      <tr>
         <td>Student ID</td>
         <td>{studentID}</td>
       </tr>
-      
-      <td className='btns'>
-        <Link to={`/userdetails/${_id}`} className="update-btn">Update</Link>
-        <button onClick={deleteHandler} className="delete-btn">Delete</button>
-      </td>
-    </div>
-    
+      <tr>
+        <td colSpan="2" className='btns'>
+          <Link to={`/userdetails/${_id}`} className="update-btn">Update</Link>
+          <button onClick={deleteHandler} className="delete-btn">Delete</button>
+        </td>
+      </tr>
+    </>
   );
 }
 
