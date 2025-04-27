@@ -4,7 +4,7 @@ import "./homepage.css";
 
 // importing images
 import homebgpic from "./homebgpic.png";
-import image2 from "./image2.jpeg";
+import image2 from "./image2.JPG";
 import image3 from "./image3.jpg"; 
 
 function Home() {
