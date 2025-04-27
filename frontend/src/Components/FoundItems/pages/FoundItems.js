@@ -139,7 +139,7 @@ const FoundItems = () => {
           </Button>
           <Button 
             variant="outline-primary"
-            onClick={() => navigate('/found-items/my-reports')}
+            onClick={() => navigate('/my-reports')}
           >
             My Reports
           </Button>
@@ -158,7 +158,7 @@ const FoundItems = () => {
           </Alert>
         )}
 
-        <div className="filter-section">
+        <div className="filter-section mb-4">
           <Row>
             <Col md={4}>
               <InputGroup>
@@ -202,10 +202,12 @@ const FoundItems = () => {
           </Row>
         </div>
 
-        {filteredItems.length === 0 && !loading ? (
-          <div className="empty-state">
+        {filteredItems.length === 0 ? (
+          <div className="empty-state text-center py-5">
             <h4>No Items Found</h4>
-            <p>Try adjusting your search or filters, or check "My Reports" for items you've reported.</p>
+            <p className="text-muted">
+              Try adjusting your search or filters, or check "My Reports" for items you've reported.
+            </p>
           </div>
         ) : (
           <Row>
@@ -224,7 +226,7 @@ const FoundItems = () => {
                       <span>{item.description}</span>
                       {getStatusBadge(item.status)}
                     </Card.Title>
-                    <Card.Text>
+                    <div className="card-text">
                       <div className="mb-2">
                         <strong>Category:</strong> {item.category}
                       </div>
@@ -234,7 +236,7 @@ const FoundItems = () => {
                       <div className="mb-2">
                         <strong>Location:</strong> {item.location || 'Not specified'}
                       </div>
-                    </Card.Text>
+                    </div>
                   </Card.Body>
                 </Card>
               </Col>

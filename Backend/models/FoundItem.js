@@ -49,12 +49,12 @@ const FoundItemSchema = new mongoose.Schema({
   },
   finder: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'UserModel',
     required: false
   },
   claimant: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'UserModel',
     default: null
   },
   staffNotes: {

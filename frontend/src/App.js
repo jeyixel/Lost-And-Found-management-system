@@ -1,18 +1,35 @@
 // import logo from './logo.svg';
 import React from 'react';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import Charity from "./Components/Charity/Charity";
 import UserDetails from "./Components/UserDetails/Users";
 import CreateUser from "./Components/Adduser/Adduser";
 import FoundItems from "./Components/FoundItems/pages/FoundItems";
+import AdminFoundItems from "./Components/FoundItems/pages/AdminFoundItems";
 import LostItems from "./Components/Lostitems/Lostitems";
 import Feedback from "./Components/Feedback/Feedback";
 import UpdateUsers from "./Components/UpdateUser/UpdateUsers";
 import Login from "./Components/Login/Login";
 import Launch from "./Components/LaunchingPage/Launchpage";
 import MyReports from './Components/FoundItems/pages/MyReports';
+
+// Protected Route component
+const ProtectedRoute = ({ children, requireAdmin }) => {
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  const isAuthenticated = !!localStorage.getItem('userId');
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (requireAdmin && !isAdmin) {
+    return <Navigate to="/userdetails" />;
+  }
+
+  return children;
+};
 
 function App() {
   return (
@@ -29,8 +46,24 @@ function App() {
           <Route path="/foundItems" element={<FoundItems />} />
           <Route path="/charity" element={<Charity />} />
           <Route path="/userdetails/:id" element={<UpdateUsers />} />
-          <Route path="/my-reports" element={<MyReports />} />
-          <Route path="/found-items/my-reports" element={<MyReports />} />
+          <Route 
+            path="/my-reports" 
+            element={
+              <ProtectedRoute>
+                <MyReports />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Admin Routes */}
+          <Route 
+            path="/admin/found-items" 
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <AdminFoundItems />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </React.Fragment>
     </div>

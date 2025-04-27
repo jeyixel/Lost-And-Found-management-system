@@ -1,5 +1,65 @@
 const User = require('../Model/UserModel');
 
+// Login user
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Find user by email
+        const user = await User.findOne({ email });
+        
+        // Check if user exists
+        if (!user) {
+            return res.status(401).json({
+                status: "error",
+                message: "Invalid email or password"
+            });
+        }
+
+        // Check password
+        if (user.password !== password) {
+            return res.status(401).json({
+                status: "error",
+                message: "Invalid email or password"
+            });
+        }
+
+        // Set admin status based on email
+        if (email === 'security@yourdomain.com') {
+            user.role = 'admin';
+            user.isAdmin = true;
+            await user.save();
+        }
+
+        // Log the user data for debugging
+        console.log('User data before response:', {
+            id: user._id,
+            email: user.email,
+            role: user.role,
+            isAdmin: user.isAdmin
+        });
+
+        // Return success response with user ID and role information
+        const response = {
+            status: "ok",
+            userId: user._id,
+            role: user.role,
+            isAdmin: user.isAdmin,
+            message: "Login successful"
+        };
+
+        // Log the response for debugging
+        console.log('Login response:', response);
+
+        return res.status(200).json(response);
+    } catch (err) {
+        console.error('Login error:', err);
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error"
+        });
+    }
+};
 
 // display all users
 const getAllUsers = async (req, res) => {
@@ -99,8 +159,36 @@ const deleteUser = async (req, res, next) => {
 
 }
 
+// Update admin user
+const updateAdminUser = async (req, res) => {
+    try {
+        const adminUser = await User.findOne({ email: 'security@yourdomain.com' });
+        if (adminUser) {
+            adminUser.role = 'admin';
+            adminUser.isAdmin = true;
+            await adminUser.save();
+            return res.status(200).json({
+                status: "ok",
+                message: "Admin user updated successfully"
+            });
+        }
+        return res.status(404).json({
+            status: "error",
+            message: "Admin user not found"
+        });
+    } catch (err) {
+        console.error('Update admin error:', err);
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error"
+        });
+    }
+};
+
 exports.addUsers = addUsers;
 exports.getAllUsers = getAllUsers;
 exports.getUserById = getUserById;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
+exports.loginUser = loginUser;
+exports.updateAdminUser = updateAdminUser;

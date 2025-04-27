@@ -1,4 +1,5 @@
 const FoundItem = require('../models/FoundItem');
+const UserModel = require('../Model/UserModel');
 
 // Generate a unique item ID
 const generateItemId = async () => {
@@ -70,7 +71,9 @@ exports.createFoundItem = async (req, res) => {
 // Get all found items
 exports.getAllFoundItems = async (req, res) => {
     try {
-        const foundItems = await FoundItem.find();
+        const foundItems = await FoundItem.find()
+            .populate('finder', 'name email studentID')
+            .sort('-createdAt');
         res.status(200).json({
             success: true,
             count: foundItems.length,
@@ -96,7 +99,8 @@ exports.getMyReports = async (req, res) => {
             });
         }
 
-        const foundItems = await FoundItem.find({ finder: userId });
+        const foundItems = await FoundItem.find({ finder: userId })
+            .populate('finder', 'name email studentID');
         res.status(200).json({
             success: true,
             count: foundItems.length,
@@ -114,7 +118,8 @@ exports.getMyReports = async (req, res) => {
 // Get single found item
 exports.getFoundItem = async (req, res) => {
     try {
-        const foundItem = await FoundItem.findById(req.params.id);
+        const foundItem = await FoundItem.findById(req.params.id)
+            .populate('finder', 'name email studentID');
         if (!foundItem) {
             return res.status(404).json({
                 success: false,
@@ -137,52 +142,100 @@ exports.getFoundItem = async (req, res) => {
 // Update found item
 exports.updateFoundItem = async (req, res) => {
     try {
-        const foundItem = await FoundItem.findByIdAndUpdate(
+        const item = await FoundItem.findById(req.params.id);
+        if (!item) {
+            return res.status(404).json({ success: false, error: 'Item not found' });
+        }
+
+        // Check if the user is an admin
+        const user = req.user;
+        if (!user || !user.isAdmin) {
+            // For non-admin users, check if item is in storage or claimed
+            if (item.status === 'In Storage' || item.status === 'Claimed') {
+                return res.status(403).json({ 
+                    success: false, 
+                    error: 'Cannot update items that are in storage or claimed' 
+                });
+            }
+        }
+
+        const updatedItem = await FoundItem.findByIdAndUpdate(
             req.params.id,
             req.body,
-            {
-                new: true,
-                runValidators: true
-            }
+            { new: true }
         );
-        if (!foundItem) {
-            return res.status(404).json({
-                success: false,
-                error: 'Item not found'
-            });
-        }
-        res.status(200).json({
-            success: true,
-            data: foundItem
-        });
+
+        res.status(200).json({ success: true, data: updatedItem });
     } catch (error) {
-        console.error('Error updating found item:', error);
-        res.status(500).json({
-            success: false,
-            error: error.message || 'Failed to update found item'
-        });
+        console.error('Error updating item:', error);
+        res.status(500).json({ success: false, error: 'Failed to update item' });
     }
 };
 
 // Delete found item
 exports.deleteFoundItem = async (req, res) => {
     try {
-        const foundItem = await FoundItem.findByIdAndDelete(req.params.id);
+        const item = await FoundItem.findById(req.params.id);
+        if (!item) {
+            return res.status(404).json({ success: false, error: 'Item not found' });
+        }
+
+        // Check if the user is an admin
+        const user = req.user;
+        if (!user || !user.isAdmin) {
+            // For non-admin users, check if item is in storage or claimed
+            if (item.status === 'In Storage' || item.status === 'Claimed') {
+                return res.status(403).json({ 
+                    success: false, 
+                    error: 'Cannot delete items that are in storage or claimed' 
+                });
+            }
+        }
+
+        await FoundItem.findByIdAndDelete(req.params.id);
+        res.status(200).json({ success: true, data: {} });
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        res.status(500).json({ success: false, error: 'Failed to delete item' });
+    }
+};
+
+// Admin: Update item status
+exports.updateFoundItemStatus = async (req, res) => {
+    try {
+        const { status } = req.body;
+        if (!status) {
+            return res.status(400).json({
+                success: false,
+                error: 'Status is required'
+            });
+        }
+
+        const foundItem = await FoundItem.findByIdAndUpdate(
+            req.params.id,
+            { status },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
         if (!foundItem) {
             return res.status(404).json({
                 success: false,
                 error: 'Item not found'
             });
         }
+
         res.status(200).json({
             success: true,
-            data: {}
+            data: foundItem
         });
     } catch (error) {
-        console.error('Error deleting found item:', error);
+        console.error('Error updating item status:', error);
         res.status(500).json({
             success: false,
-            error: error.message || 'Failed to delete found item'
+            error: error.message || 'Failed to update item status'
         });
     }
 }; 

@@ -12,7 +12,8 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -22,7 +23,25 @@ const userSchema = new Schema({
         type: Number,
         required: true
     },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    }
+});
 
+// Pre-save middleware to ensure role and isAdmin are in sync
+userSchema.pre('save', function(next) {
+    if (this.role === 'admin') {
+        this.isAdmin = true;
+    } else if (this.isAdmin) {
+        this.role = 'admin';
+    }
+    next();
 });
 
 module.exports = mongoose.model(

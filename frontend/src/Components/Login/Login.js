@@ -20,26 +20,79 @@ function Login() {
 
   // send request to the server
   const sendRequest = async () => {
-    return await axios.post("http://localhost:5000/login",{
-      email: String (inputs.email),
-      password: String (inputs.password),
-    }).then(res => res.data);
+    try {
+      console.log('Sending login request with:', {
+        email: inputs.email,
+        password: inputs.password
+      });
+
+      const response = await axios.post("http://localhost:5000/users/login", {
+        email: String(inputs.email),
+        password: String(inputs.password),
+      });
+
+      console.log('Raw response:', response);
+      return response.data;
+    } catch (error) {
+      console.error('Login request error:', error);
+      if (error.message === 'Network Error') {
+        throw new Error('Cannot connect to the server. Please check if the server is running.');
+      }
+      throw error;
+    }
   }
 
   // Submit button click
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const response = await sendRequest();
-      if (response.status === "ok"){
+      console.log('Login response:', response);
+
+      if (response.success) {
+        const userData = response.data;
+        // Store user data in localStorage
+        localStorage.setItem("userId", userData.userId);
+        localStorage.setItem("userRole", userData.role);
+        localStorage.setItem("isAdmin", userData.isAdmin);
+        localStorage.setItem("token", userData.token);
+        localStorage.setItem("user", JSON.stringify({
+          _id: userData.userId,
+          name: userData.name,
+          email: userData.email,
+          role: userData.role,
+          isAdmin: userData.isAdmin
+        }));
+
+        // Debug logs
+        console.log('Stored data:', {
+          userId: localStorage.getItem('userId'),
+          role: localStorage.getItem('userRole'),
+          isAdmin: localStorage.getItem('isAdmin'),
+          token: localStorage.getItem('token'),
+          user: JSON.parse(localStorage.getItem('user'))
+        });
+
+        // Show success message
         alert("Login successful");
-        localStorage.setItem("userId", response.userId);
-        history('/userdetails');
-      }else{
-        alert("Login failed");
+
+        // Redirect based on role
+        const isAdmin = userData.isAdmin === true || userData.role === 'admin';
+        console.log('Is admin?', isAdmin);
+
+        if (isAdmin) {
+          console.log('Redirecting to admin dashboard');
+          history('/admin/found-items');
+        } else {
+          console.log('Redirecting to user dashboard');
+          history('/userdetails');
+        }
+      } else {
+        alert("Login failed: " + (response.message || "Invalid credentials"));
       }
-    }catch(err){
-      console.error("Error" + err.message);
+    } catch (err) {
+      console.error("Login error:", err);
+      alert(err.message || "Login failed. Please check your credentials.");
     }
   };
 
@@ -48,28 +101,28 @@ function Login() {
       <div className="login-container">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
-          <div class="input-container">
-              <input 
-                  type="email"
-                  name="email"
-                  value={inputs.email}
-                  onChange={handleChange}
-                  required
-              />
-              <label class="label">Email</label>
-              <div class="underline"></div>
+          <div className="input-container">
+            <input
+              type="email"
+              name="email"
+              value={inputs.email}
+              onChange={handleChange}
+              required
+            />
+            <label className="label">Email</label>
+            <div className="underline"></div>
           </div>
 
-          <div class="input-container">
-              <input 
-                  type="password"
-                  name="password"
-                  value={inputs.password}
-                  onChange={handleChange}
-                  required
-              />
-              <label class="label">Password</label>
-              <div class="underline"></div>
+          <div className="input-container">
+            <input
+              type="password"
+              name="password"
+              value={inputs.password}
+              onChange={handleChange}
+              required
+            />
+            <label className="label">Password</label>
+            <div className="underline"></div>
           </div>
 
           <button className='login-btn' type="submit">Login</button>
