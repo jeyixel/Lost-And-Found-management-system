@@ -7,7 +7,7 @@ import Home from './Components/Home/Home';
 import Charity from "./Components/Charity/Charity";
 import UserDetails from "./Components/UserDetails/Users";
 import CreateUser from "./Components/Adduser/Adduser";
-import FoundItems from "./Components/FoundItems/FoundItems";
+import FoundItems from "./Components/FoundItems/pages/FoundItems";
 import LostItems from "./Components/Lostitems/Lostitems";
 import Feedback from "./Components/Feedback/Feedback";
 import UpdateUsers from "./Components/UpdateUser/UpdateUsers";
@@ -16,11 +16,11 @@ import Launch from "./Components/LaunchingPage/Launchpage";
 import AdminLogin from './Components/Login/AdminLogin';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
 import Recovery from './Components/forgotpassword/Forgotpass';
+import MyReports from './Components/FoundItems/pages/MyReports';
 
 function App() {
   return (
     <div>
-      {/* <Nav/> */}
       <React.Fragment>
         <Routes>
           <Route path="/" element={<Launch />} />
@@ -36,6 +36,8 @@ function App() {
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/forgotpassword" element={<Recovery />} />
+          <Route path="/my-reports" element={<MyReports />} />
+          <Route path="/found-items/my-reports" element={<MyReports />} />
         </Routes>
       </React.Fragment>
     </div>

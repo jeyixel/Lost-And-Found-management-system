@@ -1,0 +1,166 @@
+/* Found Items Container */
+.found-items-container {
+  padding: 2rem 0;
+}
+
+/* Search and Filter Section */
+.filter-section {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.filter-section .form-control,
+.filter-section .form-select {
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.filter-section .form-control:focus,
+.filter-section .form-select:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Item Cards */
+.item-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.item-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.item-card .card-body {
+  padding: 1.5rem;
+}
+
+.item-card .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.item-card .card-text {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.status-badge.received {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-badge.in-storage {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.status-badge.claimed {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Report Item Button */
+.report-item-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.report-item-btn:hover {
+  background-color: #43A047;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+/* My Reports Link */
+.my-reports-link {
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.my-reports-link:hover {
+  text-decoration: underline;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem 0;
+  color: #6c757d;
+  font-family: Georgia, serif;
+}
+
+.empty-state h4 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-family: Georgia, serif;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* Error Alert */
+.error-alert {
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .filter-section {
+    padding: 1rem;
+  }
+  
+  .item-card .card-img-top {
+    height: 150px;
+  }
+  
+  .item-card .card-body {
+    padding: 1rem;
+  }
+  
+  .report-item-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+} 

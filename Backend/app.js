@@ -3,7 +3,8 @@ console.log('Runningg');
 
 const express = require('express');
 const mongoose = require('mongoose');
-const router = require("./Routes/UserRoute");
+const userRouter = require("./Routes/UserRoute");
+const foundItemRouter = require("./routes/FoundItemRoute");
 
 const app = express();
 const cors = require('cors');
@@ -12,7 +13,8 @@ const UserModel = require('./Model/UserModel');
 // middleware
 app.use(express.json());
 app.use(cors());
-app.use("/users", router);
+app.use("/users", userRouter);
+app.use("/found-items", foundItemRouter);
 
 mongoose.connect("mongodb+srv://jcj2:8sOnzmeBJSiPekJr@cluster1.thoez.mongodb.net/")
 .then(() => console.log("Connected to MongoDB"))
