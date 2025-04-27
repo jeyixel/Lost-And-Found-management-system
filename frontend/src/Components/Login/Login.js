@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.css';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const history = useNavigate();
@@ -18,28 +19,33 @@ function Login() {
     }));
   };
 
-  // send request to the server
-  const sendRequest = async () => {
-    return await axios.post("http://localhost:5000/login",{
-      email: String (inputs.email),
-      password: String (inputs.password),
-    }).then(res => res.data);
-  }
-
   // Submit button click
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const response = await sendRequest();
-      if (response.status === "ok"){
-        alert("Login successful");
+    try {
+      const response = await axios.post("http://localhost:5000/login", {
+        email: inputs.email,
+        password: inputs.password,
+      }).then(res => res.data);
+
+      if (response.status === "ok") {
+        // 1) store ID + role
         localStorage.setItem("userId", response.userId);
-        history('/userdetails');
-      }else{
-        alert("Login failed");
+        localStorage.setItem("role", response.role);
+
+        // 2) branch to admin vs student
+        if (response.role === "admin") {
+          alert("Admin login successful");
+          history("/admin/dashboard");
+        } else {
+          history("/userdetails");
+        }
+      } else {
+        alert("Login failed: " + response.err);
       }
-    }catch(err){
-      console.error("Error" + err.message);
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
     }
   };
 
@@ -75,7 +81,8 @@ function Login() {
           <button className='login-btn' type="submit">Login</button>
 
           <div className='forgot-password'>
-            <a href="/forgotpassword">Forgot Password?</a>
+            {/* <a href="/forgotpassword">Forgot Password?</a> */}
+            <Link to="/forgotpassword">Forgot Password?</Link>
           </div>
         </form>
       </div>

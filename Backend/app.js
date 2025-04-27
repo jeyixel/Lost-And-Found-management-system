@@ -24,20 +24,38 @@ mongoose.connect("mongodb+srv://jcj2:8sOnzmeBJSiPekJr@cluster1.thoez.mongodb.net
 .catch(err => console.log(err));
 
 // login
+// app.js (excerpt)
+
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
-    try{
-        const user = await UserModel.findOne({email});
-        if(!user){
-            return res.json({err: "User not found"});
-        }
-        if(user.password === password){
-            return res.json({status: "ok", userId: user._id}); // sending user ID
-        }else{
-            return res.json({status: "Incorrect password"});
-        }
-    }catch(err){
-        console.error(err);
-        res.status(500).json({err: "Server error"});
+  
+    try {
+      // 1. Find the user by email
+      const user = await UserModel.findOne({ email });
+      if (!user) {
+        return res.json({ status: "error", err: "User not found" });
+      }
+  
+      // 2. Check password
+      if (user.password !== password) {
+        return res.json({ status: "error", err: "Incorrect password" });
+      }
+  
+      // 3. At this point credentials are valid.
+      //    Send back the role so the front-end can branch
+      return res.json({
+        status: "ok",
+        userId: user._id,
+        role:   user.role || "student"  // default if missing
+      });
+  
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ err: "Server error" });
     }
-});
+  });
+  
+
+// app.use('/admin', requireAdmin, (req, res) => {
+//     res.send('Admin route protected');
+// });

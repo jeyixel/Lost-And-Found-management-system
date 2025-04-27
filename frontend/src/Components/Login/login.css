@@ -7,6 +7,7 @@
     justify-content: center;
     min-height: 100vh;
     background-color: #393939;
+    background-image: url('loginbg.jpg');
 }
 
 .login-container{
@@ -22,8 +23,7 @@
 .login-container h1{
     margin-bottom: 10px;
     text-align: center;
-    font-size: 40px;
-    letter-spacing: 5px;
+    font-size: 51px;
 }
 
 .login-input-fields{
