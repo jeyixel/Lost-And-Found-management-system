@@ -31,14 +31,26 @@ function Login() {
         password: String(inputs.password),
       });
 
-      console.log('Raw response:', response);
+      console.log('Login response:', response.data);
+      
+      if (!response.data.success) {
+        throw new Error(response.data.message || 'Login failed');
+      }
+
       return response.data;
     } catch (error) {
       console.error('Login request error:', error);
-      if (error.message === 'Network Error') {
-        throw new Error('Cannot connect to the server. Please check if the server is running.');
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        throw new Error(error.response.data.message || 'Login failed');
+      } else if (error.request) {
+        // The request was made but no response was received
+        throw new Error('No response from server. Please try again.');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        throw new Error(error.message || 'Login failed');
       }
-      throw error;
     }
   }
 
@@ -47,7 +59,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await sendRequest();
-      console.log('Login response:', response);
+      console.log('Login successful:', response);
 
       if (response.success) {
         const userData = response.data;
@@ -73,9 +85,6 @@ function Login() {
           user: JSON.parse(localStorage.getItem('user'))
         });
 
-        // Show success message
-        alert("Login successful");
-
         // Redirect based on role
         const isAdmin = userData.isAdmin === true || userData.role === 'admin';
         console.log('Is admin?', isAdmin);
@@ -87,8 +96,6 @@ function Login() {
           console.log('Redirecting to user dashboard');
           history('/userdetails');
         }
-      } else {
-        alert("Login failed: " + (response.message || "Invalid credentials"));
       }
     } catch (err) {
       console.error("Login error:", err);

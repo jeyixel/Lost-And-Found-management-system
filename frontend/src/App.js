@@ -14,6 +14,8 @@ import UpdateUsers from "./Components/UpdateUser/UpdateUsers";
 import Login from "./Components/Login/Login";
 import Launch from "./Components/LaunchingPage/Launchpage";
 import MyReports from './Components/FoundItems/pages/MyReports';
+import AdminClaims from './Components/FoundItems/pages/AdminClaims';
+import UserClaims from './Components/FoundItems/pages/UserClaims';
 
 // Protected Route component
 const ProtectedRoute = ({ children, requireAdmin }) => {
@@ -46,21 +48,28 @@ function App() {
           <Route path="/foundItems" element={<FoundItems />} />
           <Route path="/charity" element={<Charity />} />
           <Route path="/userdetails/:id" element={<UpdateUsers />} />
-          <Route 
-            path="/my-reports" 
-            element={
-              <ProtectedRoute>
-                <MyReports />
-              </ProtectedRoute>
-            } 
-          />
-          
-          {/* Admin Routes */}
+          <Route path="/user-claims" element={<UserClaims />} />
           <Route 
             path="/admin/found-items" 
             element={
               <ProtectedRoute requireAdmin={true}>
                 <AdminFoundItems />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/claims" 
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <AdminClaims />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/my-reports" 
+            element={
+              <ProtectedRoute>
+                <MyReports />
               </ProtectedRoute>
             } 
           />

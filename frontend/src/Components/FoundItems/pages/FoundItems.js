@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Card, Row, Col, Badge, Alert, Button, Form, InputGroup, Modal } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { foundService } from '../services/foundService';
+import { createClaim } from '../services/claimService';
 import Spinner from '../components/Spinner';
 import Nav from '../../Navbar/Nav';
 import '../styles/FoundItems.css';
@@ -15,6 +16,8 @@ const FoundItems = () => {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showClaimModal, setShowClaimModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [formData, setFormData] = useState({
     description: '',
     category: '',
@@ -22,6 +25,11 @@ const FoundItems = () => {
     foundDateTime: new Date().toISOString().slice(0, 16),
     imageUrl: '',
     additionalDetails: ''
+  });
+  const [claimForm, setClaimForm] = useState({
+    name: '',
+    studentId: '',
+    phoneNumber: ''
   });
 
   const fetchItems = async () => {
@@ -39,8 +47,13 @@ const FoundItems = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
     fetchItems();
-  }, []);
+  }, [navigate]);
 
   const handleReportSubmit = async (e) => {
     e.preventDefault();
@@ -81,6 +94,33 @@ const FoundItems = () => {
         imageUrl: file.name
       }));
     }
+  };
+
+  const handleClaimSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setError(null);
+      const claimData = {
+        itemId: selectedItem._id,
+        claimedBy: claimForm
+      };
+      await createClaim(claimData);
+      setShowClaimModal(false);
+      setClaimForm({
+        name: '',
+        studentId: '',
+        phoneNumber: ''
+      });
+      fetchItems();
+    } catch (error) {
+      console.error('Error submitting claim:', error);
+      setError(error.response?.data?.error || error.message || 'Failed to submit claim. Please try again.');
+    }
+  };
+
+  const handleClaimClick = (item) => {
+    setSelectedItem(item);
+    setShowClaimModal(true);
   };
 
   const getStatusBadge = (status) => {
@@ -130,19 +170,22 @@ const FoundItems = () => {
     <>
       <Nav />
       <div className="found-items-container container mt-4">
-        <div className="mb-4 d-flex align-items-center gap-3">
-          <Button 
-            className="report-item-btn"
-            onClick={() => setShowReportModal(true)}
-          >
-            Report Found Item
-          </Button>
-          <Button 
-            variant="outline-primary"
-            onClick={() => navigate('/my-reports')}
-          >
-            My Reports
-          </Button>
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h2>Found Items</h2>
+          <div className="d-flex gap-2">
+            <Button 
+              variant="outline-primary" 
+              onClick={() => navigate('/user-claims')}
+            >
+              My Claims
+            </Button>
+            <Button 
+              variant="primary" 
+              onClick={() => setShowReportModal(true)}
+            >
+              Report Found Item
+            </Button>
+          </div>
         </div>
 
         {error && (
@@ -228,6 +271,9 @@ const FoundItems = () => {
                     </Card.Title>
                     <div className="card-text">
                       <div className="mb-2">
+                        <strong>Item ID:</strong> {item.itemId}
+                      </div>
+                      <div className="mb-2">
                         <strong>Category:</strong> {item.category}
                       </div>
                       <div className="mb-2">
@@ -236,7 +282,22 @@ const FoundItems = () => {
                       <div className="mb-2">
                         <strong>Location:</strong> {item.location || 'Not specified'}
                       </div>
+                      {item.additionalDetails && (
+                        <div className="mb-2">
+                          <strong>Additional Details:</strong> {item.additionalDetails}
+                        </div>
+                      )}
                     </div>
+                    {item.status !== 'Claimed' && (
+                      <div className="d-flex justify-content-end">
+                        <Button 
+                          variant="primary" 
+                          onClick={() => handleClaimClick(item)}
+                        >
+                          Claim Item
+                        </Button>
+                      </div>
+                    )}
                   </Card.Body>
                 </Card>
               </Col>
@@ -334,6 +395,64 @@ const FoundItems = () => {
                 </Button>
                 <Button variant="primary" type="submit">
                   Submit Report
+                </Button>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
+
+        {/* Claim Modal */}
+        <Modal show={showClaimModal} onHide={() => setShowClaimModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Claim Item</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleClaimSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>Item ID</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedItem?.itemId}
+                  disabled
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Your Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={claimForm.name}
+                  onChange={(e) => setClaimForm({ ...claimForm, name: e.target.value })}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Student ID</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={claimForm.studentId}
+                  onChange={(e) => setClaimForm({ ...claimForm, studentId: e.target.value })}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  type="tel"
+                  value={claimForm.phoneNumber}
+                  onChange={(e) => setClaimForm({ ...claimForm, phoneNumber: e.target.value })}
+                  required
+                />
+              </Form.Group>
+
+              <div className="d-flex justify-content-end gap-2">
+                <Button variant="secondary" onClick={() => setShowClaimModal(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" type="submit">
+                  Submit Claim
                 </Button>
               </div>
             </Form>

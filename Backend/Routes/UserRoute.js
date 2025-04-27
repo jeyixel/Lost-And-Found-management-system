@@ -13,60 +13,7 @@ router.get('/', Usercontroller.getAllUsers);
 router.post('/', Usercontroller.addUsers);
 
 // Login route
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        // Find user by email
-        const user = await User.findOne({ email });
-        
-        // Check if user exists
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password"
-            });
-        }
-
-        // Check password
-        if (user.password !== password) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password"
-            });
-        }
-
-        // Generate JWT token
-        const token = jwt.sign(
-            { 
-                id: user._id,
-                role: user.role,
-                isAdmin: user.isAdmin
-            },
-            process.env.JWT_SECRET || 'your-secret-key',
-            { expiresIn: '1d' }
-        );
-
-        // Return user data and token
-        res.status(200).json({
-            success: true,
-            data: {
-                userId: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                isAdmin: user.isAdmin,
-                token: token
-            }
-        });
-    } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({
-            success: false,
-            message: "An error occurred during login"
-        });
-    }
-});
+router.post('/login', Usercontroller.loginUser);
 
 // Check admin status
 router.get('/check-admin', async (req, res) => {
@@ -133,6 +80,71 @@ router.post('/update-admin', async (req, res) => {
 router.get('/:userId', Usercontroller.getUserById);
 router.put('/:userId', Usercontroller.updateUser);
 router.delete('/:userId', Usercontroller.deleteUser);
+
+// Check admin user
+router.get('/debug/admin', async (req, res) => {
+    try {
+        const adminUser = await User.findOne({ email: 'security@yourdomain.com' });
+        if (adminUser) {
+            return res.status(200).json({
+                success: true,
+                data: {
+                    email: adminUser.email,
+                    role: adminUser.role,
+                    isAdmin: adminUser.isAdmin
+                }
+            });
+        }
+        return res.status(404).json({
+            success: false,
+            message: "Admin user not found"
+        });
+    } catch (err) {
+        console.error('Debug admin error:', err);
+        return res.status(500).json({
+            success: false,
+            message: "Error checking admin user"
+        });
+    }
+});
+
+// Create or update admin user
+router.post('/debug/set-admin', async (req, res) => {
+    try {
+        const adminUser = await User.findOne({ email: 'security@yourdomain.com' });
+        
+        if (adminUser) {
+            // Update existing admin user
+            adminUser.password = 'admin123';
+            adminUser.role = 'admin';
+            adminUser.isAdmin = true;
+            await adminUser.save();
+        } else {
+            // Create new admin user
+            const newAdmin = new User({
+                name: 'Admin User',
+                studentID: 'ADMIN001',
+                email: 'security@yourdomain.com',
+                password: 'admin123',
+                phoneNumber: '1234567890',
+                role: 'admin',
+                isAdmin: true
+            });
+            await newAdmin.save();
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Admin user created/updated successfully"
+        });
+    } catch (err) {
+        console.error('Set admin error:', err);
+        return res.status(500).json({
+            success: false,
+            message: "Error creating/updating admin user"
+        });
+    }
+});
 
 // export
 module.exports = router;

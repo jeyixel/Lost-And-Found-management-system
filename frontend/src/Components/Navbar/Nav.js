@@ -17,16 +17,17 @@ function Nav() {
           {!isAdmin && <Link to="/createAccount">Create Account</Link>}
           <Link to="/lostItems">Lost Items</Link>
           {isAdmin ? (
-            <Link to="/admin/found-items">Found Items</Link>
+            <>
+              <Link to="/admin/found-items">Found Items</Link>
+              <Link to="/admin/found-items">Profile</Link>
+            </>
           ) : (
-            <Link to="/foundItems">Found Items</Link>
+            <>
+              <Link to="/foundItems">Found Items</Link>
+              <Link to="/userdetails">Profile</Link>
+            </>
           )}
           <Link to="/feedback">Feedback</Link>
-          {isAdmin ? (
-            <Link to="/admin/found-items">Profile</Link>
-          ) : (
-            <Link to="/userdetails">Profile</Link>
-          )}
         </div>
       </header>
     </div>

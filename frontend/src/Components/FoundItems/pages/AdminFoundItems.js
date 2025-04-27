@@ -178,6 +178,12 @@ const AdminFoundItems = () => {
           >
             Report Found Item
           </Button>
+          <Button 
+            variant="outline-primary"
+            onClick={() => navigate('/admin/claims')}
+          >
+            View Claims
+          </Button>
         </div>
 
         {error && (

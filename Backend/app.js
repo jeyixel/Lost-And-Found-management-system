@@ -7,6 +7,7 @@ const userRouter = require("./Routes/UserRoute");
 const foundItemRouter = require("./routes/FoundItemRoute");
 const adminRouter = require("./Routes/AdminRoute");
 const adminFoundItemRouter = require("./Routes/AdminFoundItemRoute");
+const claimRouter = require("./Routes/ClaimRoute");
 const cors = require('cors');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use("/users", userRouter);
 app.use("/found-items", foundItemRouter);
 app.use("/admin", adminRouter);
 app.use("/admin/found-items", adminFoundItemRouter);
+app.use("/admin/claims", claimRouter);
 
 // MongoDB connection
 mongoose.connect("mongodb+srv://jcj2:8sOnzmeBJSiPekJr@cluster1.thoez.mongodb.net/")

@@ -1,25 +1,40 @@
 const User = require('../Model/UserModel');
+const jwt = require('jsonwebtoken');
 
 // Login user
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
+        console.log('Login attempt:', { email, password });
+        
         // Find user by email
         const user = await User.findOne({ email });
+        console.log('Found user:', user ? {
+            email: user.email,
+            password: user.password,
+            role: user.role,
+            isAdmin: user.isAdmin
+        } : 'User not found');
         
         // Check if user exists
         if (!user) {
             return res.status(401).json({
-                status: "error",
+                success: false,
                 message: "Invalid email or password"
             });
         }
 
         // Check password
+        console.log('Password comparison:', {
+            inputPassword: password,
+            storedPassword: user.password,
+            match: user.password === password
+        });
+
         if (user.password !== password) {
             return res.status(401).json({
-                status: "error",
+                success: false,
                 message: "Invalid email or password"
             });
         }
@@ -31,31 +46,33 @@ const loginUser = async (req, res) => {
             await user.save();
         }
 
-        // Log the user data for debugging
-        console.log('User data before response:', {
-            id: user._id,
-            email: user.email,
-            role: user.role,
-            isAdmin: user.isAdmin
+        // Generate JWT token
+        const token = jwt.sign(
+            { 
+                id: user._id,
+                role: user.role,
+                isAdmin: user.isAdmin
+            },
+            process.env.JWT_SECRET || 'your-secret-key',
+            { expiresIn: '1d' }
+        );
+
+        // Return success response with user data and token
+        return res.status(200).json({
+            success: true,
+            data: {
+                userId: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                isAdmin: user.isAdmin,
+                token: token
+            }
         });
-
-        // Return success response with user ID and role information
-        const response = {
-            status: "ok",
-            userId: user._id,
-            role: user.role,
-            isAdmin: user.isAdmin,
-            message: "Login successful"
-        };
-
-        // Log the response for debugging
-        console.log('Login response:', response);
-
-        return res.status(200).json(response);
     } catch (err) {
         console.error('Login error:', err);
         return res.status(500).json({
-            status: "error",
+            success: false,
             message: "Internal server error"
         });
     }
