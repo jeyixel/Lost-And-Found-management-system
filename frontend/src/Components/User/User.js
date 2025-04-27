@@ -20,10 +20,10 @@ function User(props) {
   return (
     <div className="user-details">
       <div className="profile-info">
-        <div className="info-row">
+        {/* <div className="info-row">
           <div className="info-label">ID</div>
           <div className="info-value">{_id}</div>
-        </div>
+        </div> */}
         <div className="info-row">
           <div className="info-label">Name</div>
           <div className="info-value">{name}</div>
@@ -46,8 +46,16 @@ function User(props) {
         </div>
       </div>
       <div className="action-buttons">
-        <Link to={`/userdetails/${_id}`} className="update-btn">Update</Link>
-        <button onClick={deleteHandler} className="delete-btn">Delete</button>
+
+        <div className="logoutbtncontainer">
+          <Link to={'/'} className="logout-btn">Log out</Link>
+        </div>
+
+
+        <div className="buttondivide">
+          <Link to={`/userdetails/${_id}`} className="update-btn">Update</Link>
+          <button onClick={deleteHandler} className="delete-btn">Delete</button>
+        </div>
       </div>
     </div>
   );

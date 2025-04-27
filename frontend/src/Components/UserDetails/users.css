@@ -84,9 +84,16 @@
 
 .action-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 15px;
   margin-top: 20px;
+}
+
+.buttondivide{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
 }
 
 .update-btn {
@@ -103,7 +110,7 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
   width: auto;
-  height: auto;
+  height: 50px;
 }
 
 .update-btn:hover {
@@ -127,13 +134,35 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3);
   width: auto;
-  height: auto;
+  height: 50px;
 }
 
 .delete-btn:hover {
   background-color: #c0392b;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(231, 76, 60, 0.4);
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(46, 204, 113, 0.3);
+}
+
+.logout-btn:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(46, 204, 113, 0.4);
 }
 
 .loading-container {

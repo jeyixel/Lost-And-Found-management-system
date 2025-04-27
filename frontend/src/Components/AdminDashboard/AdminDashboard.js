@@ -1,5 +1,6 @@
 import React from 'react';
 import "./adminpage.css";
+import { Link } from 'react-router-dom';
 
 function AdminDashboard() {
   return (
@@ -38,7 +39,7 @@ function AdminDashboard() {
               <div className="admin-dropdown-content">
                 <button className="admin-dropdown-item">
                   <span className="admin-dropdown-icon">🚪</span>
-                  <span className="admin-dropdown-text">Sign Out</span>
+                  <span className="admin-dropdown-text"><Link to = "/">Sign Out</Link></span>
                 </button>
               </div>
             </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.css';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const history = useNavigate();
@@ -34,6 +35,7 @@ function Login() {
 
         // 2) branch to admin vs student
         if (response.role === "admin") {
+          alert("Admin login successful");
           history("/admin/dashboard");
         } else {
           history("/userdetails");
@@ -79,7 +81,8 @@ function Login() {
           <button className='login-btn' type="submit">Login</button>
 
           <div className='forgot-password'>
-            <a href="/forgotpassword">Forgot Password?</a>
+            {/* <a href="/forgotpassword">Forgot Password?</a> */}
+            <Link to="/forgotpassword">Forgot Password?</Link>
           </div>
         </form>
       </div>
