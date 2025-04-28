@@ -70,7 +70,7 @@ export const deleteClaim = async (claimId) => {
 
 export const getUserClaims = async () => {
     try {
-        const response = await api.get('/claims/user');
+        const response = await api.get('/admin/claims/user');
         if (!response.data.success) {
             throw new Error(response.data.error || 'Failed to fetch user claims');
         }

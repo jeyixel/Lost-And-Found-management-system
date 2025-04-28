@@ -131,21 +131,23 @@ exports.deleteClaim = async (req, res) => {
     }
 };
 
+// Get user's claims
 exports.getUserClaims = async (req, res) => {
-  try {
-    const claims = await Claim.find({ 'claimedBy.studentId': req.user.studentID })
-      .populate('itemId', 'description category status')
-      .sort('-createdAt');
-
-    res.json({
-      success: true,
-      data: claims
-    });
-  } catch (error) {
-    console.error('Error fetching user claims:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to fetch user claims'
-    });
-  }
+    try {
+        const userId = req.user._id; // Get user ID from the authenticated request
+        const claims = await Claim.find({ claimedBy: userId })
+            .populate('itemId', 'description category status foundDateTime location')
+            .sort('-createdAt');
+            
+        res.status(200).json({ 
+            success: true, 
+            data: claims 
+        });
+    } catch (error) {
+        console.error('Error fetching user claims:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: error.message || 'Failed to fetch user claims' 
+        });
+    }
 }; 

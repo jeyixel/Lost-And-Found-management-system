@@ -82,4 +82,56 @@
   .delete-btn:hover {
     background-color: #c0392b;
   }
+
+.user-actions {
+  margin-top: 30px;
+  text-align: center;
+  padding: 20px;
+}
+
+.user-actions td {
+  text-align: center;
+  padding: 20px !important;
+  border: none !important;
+}
+
+.my-reports-link {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.my-reports-link:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 40px;
+  margin: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.loading-container h2,
+.error-container h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.error-container p {
+  color: #e74c3c;
+  font-size: 16px;
+}
   

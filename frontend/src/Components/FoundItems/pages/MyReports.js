@@ -187,7 +187,7 @@ const MyReports = () => {
                   {item.imageUrl && (
                     <Card.Img
                       variant="top"
-                      src={item.imageUrl}
+                      src={`http://localhost:5000${item.imageUrl}`}
                       alt={item.description}
                     />
                   )}
@@ -251,7 +251,7 @@ const MyReports = () => {
               <div>
                 {selectedItem.imageUrl && (
                   <img
-                    src={selectedItem.imageUrl}
+                    src={`http://localhost:5000${selectedItem.imageUrl}`}
                     alt={selectedItem.description}
                     className="w-100 mb-4"
                     style={{ maxHeight: '300px', objectFit: 'cover', borderRadius: '8px' }}

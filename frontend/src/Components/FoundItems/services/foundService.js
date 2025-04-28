@@ -18,6 +18,17 @@ export const foundService = {
     return await axios.get(`${API_URL}/my-reports?userId=${userId}`);
   },
 
+  // Upload image
+  uploadImage: async (imageFile) => {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    return await axios.post(`${API_URL}/upload-image`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  },
+
   // Report a new found item
   reportItem: async (itemData) => {
     const userId = localStorage.getItem('userId');

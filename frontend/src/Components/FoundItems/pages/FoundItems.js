@@ -84,15 +84,23 @@ const FoundItems = () => {
     }));
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      // For now, we'll just store the file name
-      // In a real app, you'd upload this to a storage service
-      setFormData(prev => ({
-        ...prev,
-        imageUrl: file.name
-      }));
+      try {
+        // Upload the image first
+        const response = await foundService.uploadImage(file);
+        if (response.data.success) {
+          // Update form data with the returned image URL
+          setFormData(prev => ({
+            ...prev,
+            imageUrl: response.data.data.imageUrl
+          }));
+        }
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        setError('Failed to upload image. Please try again.');
+      }
     }
   };
 
@@ -180,6 +188,12 @@ const FoundItems = () => {
               My Claims
             </Button>
             <Button 
+              variant="outline-primary" 
+              onClick={() => navigate('/my-reports')}
+            >
+              My Reports
+            </Button>
+            <Button 
               variant="primary" 
               onClick={() => setShowReportModal(true)}
             >
@@ -260,7 +274,7 @@ const FoundItems = () => {
                   {item.imageUrl && (
                     <Card.Img
                       variant="top"
-                      src={item.imageUrl}
+                      src={`http://localhost:5000${item.imageUrl}`}
                       alt={item.description}
                     />
                   )}

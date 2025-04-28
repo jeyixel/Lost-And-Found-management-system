@@ -20,4 +20,7 @@ router.put('/:id', FoundItemController.updateFoundItem);
 // Delete found item
 router.delete('/:id', FoundItemController.deleteFoundItem);
 
+// Upload image
+router.post('/upload-image', FoundItemController.uploadImage);
+
 module.exports = router; 

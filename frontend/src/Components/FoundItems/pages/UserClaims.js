@@ -17,6 +17,7 @@ const UserClaims = () => {
       setLoading(true);
       setError(null);
       const data = await getUserClaims();
+      console.log('Fetched claims:', data); // Debug log
       setClaims(data);
     } catch (error) {
       console.error('Error fetching claims:', error);
@@ -57,7 +58,7 @@ const UserClaims = () => {
           <h2>Your Claims</h2>
           <Button 
             variant="outline-secondary" 
-            onClick={() => navigate('/found-items')}
+            onClick={() => navigate('/foundItems')}
           >
             Back to Found Items
           </Button>
@@ -98,10 +99,12 @@ const UserClaims = () => {
                           <div><strong>Description:</strong> {claim.itemId?.description || 'N/A'}</div>
                           <div><strong>Category:</strong> {claim.itemId?.category || 'N/A'}</div>
                           <div><strong>Status:</strong> {claim.itemId?.status || 'N/A'}</div>
+                          <div><strong>Found On:</strong> {claim.itemId?.foundDateTime ? new Date(claim.itemId.foundDateTime).toLocaleDateString() : 'N/A'}</div>
+                          <div><strong>Location:</strong> {claim.itemId?.location || 'N/A'}</div>
                         </div>
                       </div>
                       <div className="mb-2">
-                        <strong>Claim Date:</strong> {new Date(claim.claimDate).toLocaleDateString()}
+                        <strong>Claim Date:</strong> {new Date(claim.createdAt).toLocaleDateString()}
                       </div>
                       {claim.adminNotes && (
                         <div className="mb-2">

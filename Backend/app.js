@@ -26,6 +26,9 @@ app.use("/admin", adminRouter);
 app.use("/admin/found-items", adminFoundItemRouter);
 app.use("/admin/claims", claimRouter);
 
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static('uploads'));
+
 // MongoDB connection
 mongoose.connect("mongodb+srv://jcj2:8sOnzmeBJSiPekJr@cluster1.thoez.mongodb.net/")
     .then(() => console.log("Connected to MongoDB"))

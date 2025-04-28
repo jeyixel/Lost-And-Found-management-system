@@ -257,7 +257,7 @@ const AdminFoundItems = () => {
                   {item.imageUrl && (
                     <Card.Img
                       variant="top"
-                      src={item.imageUrl}
+                      src={`http://localhost:5000${item.imageUrl}`}
                       alt={item.description}
                     />
                   )}

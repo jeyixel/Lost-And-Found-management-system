@@ -1,5 +1,67 @@
 const FoundItem = require('../models/FoundItem');
 const UserModel = require('../Model/UserModel');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+// Configure multer for file upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = 'uploads/';
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: function (req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+      return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+  }
+}).single('image');
+
+// Handle image upload
+exports.uploadImage = async (req, res) => {
+  try {
+    upload(req, res, async function(err) {
+      if (err) {
+        return res.status(400).json({
+          success: false,
+          error: err.message
+        });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          error: 'No file uploaded'
+        });
+      }
+
+      const imageUrl = `/uploads/${req.file.filename}`;
+      res.status(200).json({
+        success: true,
+        data: { imageUrl }
+      });
+    });
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to upload image'
+    });
+  }
+};
 
 // Generate a unique item ID
 const generateItemId = async () => {
