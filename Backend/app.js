@@ -24,8 +24,6 @@ mongoose.connect("mongodb+srv://jcj2:8sOnzmeBJSiPekJr@cluster1.thoez.mongodb.net
 .catch(err => console.log(err));
 
 // login
-// app.js (excerpt)
-
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
   

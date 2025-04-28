@@ -38,7 +38,8 @@ function Login() {
           alert("Admin login successful");
           history("/admin/dashboard");
         } else {
-          history("/userdetails");
+          alert("Login successful");
+          history("/mainhome");
         }
       } else {
         alert("Login failed: " + response.err);
