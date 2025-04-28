@@ -31,7 +31,7 @@
 .button1-class, .button2-class{
     margin: 10px;
     background-color: rgb(26, 109, 81);
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
     border-radius: 30px;
     width: 150px;
     height: 50px;
@@ -48,7 +48,7 @@
 .button1-class:hover, .button2-class:hover{
     margin: 10px;
     background-color: rgb(2, 2, 2);
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
     border-radius: 30px;
     width: 150px;
     height: 50px;
