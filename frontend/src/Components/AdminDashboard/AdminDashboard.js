@@ -66,7 +66,7 @@ function AdminDashboard() {
               <div className="admin-summary-icon">✅</div>
               <div className="admin-summary-info">
                 <span className="admin-summary-number">79</span>
-                <span className="admin-summary-text">Found Items</span>
+                <span className="admin-summary-text"><Link to="/foundItems">Found Items</Link></span>
               </div>
             </div>
             <div className="admin-summary-card">
@@ -85,7 +85,7 @@ function AdminDashboard() {
             <div className="admin-buttons">
               <button className="admin-button admin-button-found">
                 <span className="admin-button-icon">✅</span>
-                <span className="admin-button-text">View Found Items</span>
+                <span className="admin-button-text"><Link to="/foundItems">View Found Items</Link></span>
               </button>
               <button className="admin-button admin-button-lost">
                 <span className="admin-button-icon">🔍</span>
